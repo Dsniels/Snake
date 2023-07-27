@@ -4,7 +4,7 @@ const scoreBoard = document.getElementById('scoreBoard');
 const startButton = document.getElementById('start');
 const gameOverSign = document.getElementById('gameOver');
 
-// Game settings
+// configuraciones del juego
 const boardSize = 10;
 const gameSpeed = 120;
 const squareTypes = {
@@ -19,7 +19,7 @@ const directions = {
     ArrowLeft: -1,
 };
 
-// Game variables
+// variables
 let snake;
 let score;
 let direction;
@@ -32,7 +32,6 @@ const drawSnake = () => {
 }
 
 // Rellena cada cuadrado del tablero
-// @params 
 // square: posicion del cuadrado,
 // type: tipo de cuadrado (emptySquare, snakeSquare, foodSquare)
 const drawSquare = (square, type) => {
