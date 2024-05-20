@@ -3,7 +3,8 @@ const board = document.getElementById('board');
 const scoreBoard = document.getElementById('scoreBoard');
 const startButton = document.getElementById('start');
 const gameOverSign = document.getElementById('gameOver');
-
+let touchStartX = 0;
+let touchStartY = 0;
 // configuraciones del juego
 const boardSize = 10;
 const gameSpeed = 120;
@@ -148,17 +149,16 @@ const startGame = () => {
     updateScore();
     createRandomFood();
     document.addEventListener('keydown', directionEvent);
-    let touchStartX = 0;
-    let touchStartY = 0;
+
 
     // Manejar el inicio del toque
-    board.addEventListener('touchstart', function(e) {
+    document.addEventListener('touchstart', function(e) {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
-    }, false);
+    });
 
     // Manejar el movimiento del toque
-    board.addEventListener('touchmove', function(e) {
+    document.addEventListener('touchmove', function(e) {
         // Evitar el comportamiento predeterminado del navegador
         e.preventDefault();
 
@@ -191,9 +191,10 @@ const startGame = () => {
         // Reiniciar las coordenadas de inicio para el próximo movimiento
         touchStartX = touchEndX;
         touchStartY = touchEndY;
-    }, false);
+});
     moveInterval = setInterval( () => moveSnake(), gameSpeed  );
 
 }
 
 startButton.addEventListener('click', startGame);
+document.addEventListener()
