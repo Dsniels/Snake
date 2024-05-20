@@ -130,11 +130,6 @@ const createBoard = () => {
 }
 
 const setGame = () => {
-    let touchStartx = 0;
-    let touchStarty = 0;
-    let touchEndX = 0;
-    let touchEndY = 0;
-    let cambioDireccion =  false;
     snake = ['00', '01', '02', '03'];
     score = snake.length;
     direction = 'ArrowRight';
@@ -197,6 +192,7 @@ const startGame = () => {
         touchStartX = touchEndX;
         touchStartY = touchEndY;
     }, false);
+    moveInterval = setInterval( () => moveSnake(), gameSpeed  );
 
 }
 
