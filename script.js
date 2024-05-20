@@ -130,6 +130,11 @@ const createBoard = () => {
 }
 
 const setGame = () => {
+    let touchStartx = 0;
+    let touchStarty = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+    let cambioDireccion =  false;
     snake = ['00', '01', '02', '03'];
     score = snake.length;
     direction = 'ArrowRight';
@@ -148,6 +153,39 @@ const startGame = () => {
     updateScore();
     createRandomFood();
     document.addEventListener('keydown', directionEvent);
+    document.addEventListener('touchstart', e => {
+        const touch = e.touches[0];
+        touchStartx = touch.clientX;
+        touchStarty =   touch.clientY;
+
+    })
+    document.addEventListener('touchmove', e => {
+        if(cambioDireccion) return; 
+        const touch = e.touches[0];
+        touchEndX = touch.clientX;
+        touchEndY = touch.clientY;
+
+        const x = touchEndX - touchStartx;
+        const y = touchEndY - touchStarty;
+        if(Math.abs(x) > Math.abs(y)){
+            if(x > 0 && direction !== 'ArrowLeft'){
+                setDirection('ArrowRight');
+            } else if(x < 0 && direction !== 'ArrowRight'){
+                setDirection('ArrowLeft');
+            }
+        } else {
+            if(y > 0 && direction !== 'ArrowDown'){
+                setDirection('ArrowUp');
+            }else if(y < 0 && direction !== 'ArrowUp'){
+                setDirection('ArrowDown');
+            }
+        }
+
+        touchStartx = touchEndX;
+        touchStarty = touchEndY;
+
+
+    })
     moveInterval = setInterval( () => moveSnake(), gameSpeed);
 }
 
