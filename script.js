@@ -153,13 +153,13 @@ const startGame = () => {
     updateScore();
     createRandomFood();
     document.addEventListener('keydown', directionEvent);
-    document.addEventListener('touchstart', e => {
+    board.addEventListener('touchstart', e => {
         const touch = e.touches[0];
         touchStartx = touch.clientX;
         touchStarty =   touch.clientY;
 
     })
-    document.addEventListener('touchmove', e => {
+    board.addEventListener('touchmove', e => {
         if(cambioDireccion) return; 
         const touch = e.touches[0];
         touchEndX = touch.clientX;
