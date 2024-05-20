@@ -153,40 +153,51 @@ const startGame = () => {
     updateScore();
     createRandomFood();
     document.addEventListener('keydown', directionEvent);
-    board.addEventListener('touchstart', e => {
-        const touch = e.touches[0];
-        touchStartx = touch.clientX;
-        touchStarty =   touch.clientY;
+    let touchStartX = 0;
+    let touchStartY = 0;
 
-    })
-    board.addEventListener('touchmove', e => {
-        if(cambioDireccion) return; 
-        const touch = e.touches[0];
-        touchEndX = touch.clientX;
-        touchEndY = touch.clientY;
+    // Manejar el inicio del toque
+    board.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, false);
 
-        const x = touchEndX - touchStartx;
-        const y = touchEndY - touchStarty;
-        if(Math.abs(x) > Math.abs(y)){
-            if(x > 0 && direction !== 'ArrowLeft'){
-                setDirection('ArrowRight');
-            } else if(x < 0 && direction !== 'ArrowRight'){
-                setDirection('ArrowLeft');
+    // Manejar el movimiento del toque
+    board.addEventListener('touchmove', function(e) {
+        // Evitar el comportamiento predeterminado del navegador
+        e.preventDefault();
+
+        // Calcular la dirección del movimiento
+        let touchEndX = e.changedTouches[0].clientX;
+        let touchEndY = e.changedTouches[0].clientY;
+        let diffX = touchStartX - touchEndX;
+        let diffY = touchStartY - touchEndY;
+
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            // Movimiento horizontal
+            if (diffX > 0) {
+                // Movimiento a la izquierda
+                direction != 'ArrowRight' && setDirection('ArrowLeft');
+            } else {
+                // Movimiento a la derecha
+                direction != 'ArrowLeft' && setDirection('ArrowRight');
             }
         } else {
-            if(y > 0 && direction !== 'ArrowDown'){
-                setDirection('ArrowUp');
-            }else if(y < 0 && direction !== 'ArrowUp'){
-                setDirection('ArrowDown');
+            // Movimiento vertical
+            if (diffY > 0) {
+                // Movimiento hacia arriba
+                direction != 'ArrowDown' && setDirection('ArrowUp');
+            } else {
+                // Movimiento hacia abajo
+                direction != 'ArrowUp' && setDirection('ArrowDown');
             }
         }
 
-        touchStartx = touchEndX;
-        touchStarty = touchEndY;
+        // Reiniciar las coordenadas de inicio para el próximo movimiento
+        touchStartX = touchEndX;
+        touchStartY = touchEndY;
+    }, false);
 
-
-    })
-    moveInterval = setInterval( () => moveSnake(), gameSpeed);
 }
 
 startButton.addEventListener('click', startGame);
